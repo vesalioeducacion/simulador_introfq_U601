@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INTRODUCCIÓN A LA FISICOQUÍMICA - Bioelementos y Arquitectura Química de la Vida (Facultad de Cs. Médicas - UCCuyo)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Outfit & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f7f9f6;
+            color: #1e293b;
+        }
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        /* Paleta Institucional UCCuyo (Verde Oliva) */
+        .text-accent { color: #436600; }
+        .bg-accent { background-color: #436600; }
+        .bg-accent-hover:hover { background-color: #324d00; }
+        .bg-accent-light { background-color: #f1f6eb; }
+        .border-accent { border-color: #436600; }
+
+        .text-primary { color: #436600; }
+        .bg-primary { background-color: #436600; }
+        .bg-primary-dark { background-color: #324d00; }
+        .border-primary { border-color: #436600; }
+        
+        .focus-accent:focus {
+            border-color: #436600;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 102, 0, 0.2);
+        }
+        
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .element-pill {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .element-pill:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-accent/20 text-gray-800">
+
+    <!-- Cabecera Institucional UCCuyo -->
+    <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-accent flex items-center justify-center text-white font-bold text-xl shadow-md">
+                    FQ
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-gray-800 tracking-wide uppercase">INTRODUCCIÓN A LA FISICOQUÍMICA</h1>
+                    <p class="text-xs text-gray-500 font-semibold">Lic. en Kinesiología y Fisiatría (Facultad de Cs. Médicas - UCCuyo)</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <!-- Botón Formulario / Vademécum -->
+                <button onclick="openFormulasModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-semibold rounded-lg border border-gray-200 hover:bg-gray-200 transition">
+                    <i class="fa-solid fa-book-bookmark text-accent"></i>
+                    <span class="hidden sm:inline">Vademécum</span>
+                </button>
+                <!-- Botón Guía de Uso -->
+                <button onclick="openTutorial()" class="flex items-center gap-1.5 px-3 py-1.5 bg-accent text-white text-xs font-semibold rounded-lg shadow-sm hover:opacity-90 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Guía de Uso
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal con Barra Lateral -->
+    <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 flex flex-col lg:flex-row gap-6">
+        
+        <!-- Menú de Navegación Lateral -->
+        <nav class="w-full lg:w-64 flex flex-row lg:flex-col gap-2 bg-white p-3 rounded-2xl shadow-sm border border-gray-100 overflow-x-auto lg:overflow-x-visible whitespace-nowrap lg:whitespace-normal sticky top-20 h-fit">
+            <button onclick="switchTab('tab-intro')" id="btn-tab-intro" class="bg-accent text-white flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-semibold transition shadow-sm">
+                1. Composición Celular
+            </button>
+            <button onclick="switchTab('tab-primarios')" id="btn-tab-primarios" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition">
+                2. Primarios (C, H, O, N)
+            </button>
+            <button onclick="switchTab('tab-secundarios')" id="btn-tab-secundarios" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition">
+                3. Secundarios & Sostén
+            </button>
+            <button onclick="switchTab('tab-trazas')" id="btn-tab-trazas" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition">
+                4. Oligoelementos (Trazas)
+            </button>
+            <button onclick="switchTab('tab-clinica')" id="btn-tab-clinica" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition">
+                5. Casos Clínicos & Déficit
+            </button>
+        </nav>
+
+        <!-- Área de Contenido Dinámico -->
+        <div class="flex-1 space-y-6">
+
+            <!-- =========================================================
+                 MÓDULO 1: INTRODUCCIÓN A LA BIOQUÍMICA Y COMPOSICIÓN CELULAR
+                 ========================================================= -->
+            <section id="tab-intro" class="module-section space-y-6">
+                <!-- Banner del Módulo 1 -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-md border border-accent/20">Módulo 1 • Fundamentos Bioquímicos</span>
+                            <h2 class="text-xl font-extrabold text-slate-800 mt-1.5">Concepto General de Bioelementos</h2>
+                            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Elementos químicos que conforman la materia viva; representan más del 90% de la masa celular y estructuran los bloques de la vida.</p>
+                        </div>
+                        <div class="flex items-center space-x-2 bg-accent-light px-3.5 py-2 rounded-xl border border-accent/20 font-mono text-xs font-bold text-accent">
+                            <i class="fa-solid fa-atom"></i>
+                            <span>Masa Celular > 90%</span>
+                        </div>
+                    </div>
+
+                    <!-- Tres Categorías Cuantitativas -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 mt-4">
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-cubes text-accent"></i> 1. Primarios (Mayoritarios)
+                                </span>
+                                <span class="text-[10px] font-mono font-bold bg-accent text-white px-2 py-0.5 rounded">~95%</span>
+                            </div>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">
+                                Carbono (18.5%), Hidrógeno (9.5%), Oxígeno (65%) y Nitrógeno (3.3%). Forman enlaces covalentes estables y estructuran las biomoléculas orgánicas e inorgánicas fundamentales.
+                            </p>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-bolt text-accent"></i> 2. Secundarios (Iónicos/Sostén)
+                                </span>
+                                <span class="text-[10px] font-mono font-bold bg-accent-light text-accent border border-accent/30 px-2 py-0.5 rounded">~3.9% - 4.5%</span>
+                            </div>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">
+                                Ca, Na, K, Mg, Cl, P, S. Actúan como iones disueltos en fluidos corporales (potenciales bioeléctricos, gradientes osmóticos), cofactores enzimáticos y matrices de sostén mineral.
+                            </p>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-gem text-accent"></i> 3. Oligoelementos (Trazas)
+                                </span>
+                                <span class="text-[10px] font-mono font-bold bg-amber-100 text-amber-900 border border-amber-300 px-2 py-0.5 rounded">&lt; 0.5%</span>
+                            </div>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">
+                                Fe, I, Zn, Cu, Co, F, Se. Concentraciones ínfimas de importancia vital absoluta; su carencia desencadena cuadros patológicos severos (anemias, bocio, disfunción inmune).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulación 1: Espectrómetro y Clasificador de Abundancia Celular -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                        <div>
+                            <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-microscope text-accent"></i>
+                                Laboratorio de Espectrometría: Clasificador de Abundancia
+                            </h3>
+                            <p class="text-xs text-slate-500">Seleccioná una muestra química de la bandeja superior y clasificala en el compartimiento de abundancia porcentual adecuado.</p>
+                        </div>
+                        <button onclick="resetMod1Classification()" class="text-xs font-semibold text-slate-500 hover:text-accent flex items-center gap-1 self-start sm:self-auto">
+                            <i class="fa-solid fa-rotate-left"></i> Reiniciar Bandeja
+                        </button>
+                    </div>
+
+                    <!-- Bandeja de Muestras Pendientes -->
+                    <div class="space-y-1.5">
+                        <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Muestras Químicas por Asignar (Haz clic para seleccionar):</span>
+                        <div id="m1-unassigned-pool" class="flex flex-wrap gap-2 p-3.5 rounded-xl bg-slate-50 border border-dashed border-slate-300 min-h-[58px] items-center">
+                            <!-- Generado dinámicamente por JS -->
+                        </div>
+                    </div>
+
+                    <!-- 3 Contenedores de Destino -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-2">
+                        <!-- Primarios -->
+                        <div onclick="assignSelectedElement('primario')" class="p-4 rounded-xl border-2 border-accent/20 bg-accent-light/40 hover:border-accent cursor-pointer transition flex flex-col justify-between min-h-[160px] group">
+                            <div>
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <span class="font-bold text-xs text-accent">Bioelementos Primarios</span>
+                                    <span class="text-[10px] font-mono font-bold bg-accent text-white px-2 py-0.5 rounded">~95%</span>
+                                </div>
+                                <p class="text-[11px] text-slate-500 mb-2">Bloques estructurales mayoritarios del organismo.</p>
+                                <div id="bucket-primario" class="flex flex-wrap gap-1.5 min-h-[36px]"></div>
+                            </div>
+                            <div class="mt-3 text-[11px] text-center font-bold text-accent py-1 bg-white rounded-lg border border-accent/30 group-hover:bg-accent group-hover:text-white transition">
+                                <i class="fa-solid fa-plus mr-1"></i> Depositar aquí
+                            </div>
+                        </div>
+
+                        <!-- Secundarios -->
+                        <div onclick="assignSelectedElement('secundario')" class="p-4 rounded-xl border-2 border-slate-200 bg-slate-50 hover:border-accent cursor-pointer transition flex flex-col justify-between min-h-[160px] group">
+                            <div>
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <span class="font-bold text-xs text-slate-800">Bioelementos Secundarios</span>
+                                    <span class="text-[10px] font-mono font-bold bg-slate-200 text-slate-700 px-2 py-0.5 rounded">~3.9% - 4.5%</span>
+                                </div>
+                                <p class="text-[11px] text-slate-500 mb-2">Electrólitos fisiológicos, cofactores y mineralización.</p>
+                                <div id="bucket-secundario" class="flex flex-wrap gap-1.5 min-h-[36px]"></div>
+                            </div>
+                            <div class="mt-3 text-[11px] text-center font-bold text-slate-700 py-1 bg-white rounded-lg border border-slate-200 group-hover:bg-accent group-hover:text-white transition">
+                                <i class="fa-solid fa-plus mr-1"></i> Depositar aquí
+                            </div>
+                        </div>
+
+                        <!-- Oligoelementos -->
+                        <div onclick="assignSelectedElement('oligoelemento')" class="p-4 rounded-xl border-2 border-amber-200 bg-amber-50/50 hover:border-amber-500 cursor-pointer transition flex flex-col justify-between min-h-[160px] group">
+                            <div>
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <span class="font-bold text-xs text-amber-900">Oligoelementos (Trazas)</span>
+                                    <span class="text-[10px] font-mono font-bold bg-amber-200 text-amber-900 px-2 py-0.5 rounded">&lt; 0.5%</span>
+                                </div>
+                                <p class="text-[11px] text-slate-500 mb-2">Cofactores vitales e iones en proporciones mínimas.</p>
+                                <div id="bucket-oligoelemento" class="flex flex-wrap gap-1.5 min-h-[36px]"></div>
+                            </div>
+                            <div class="mt-3 text-[11px] text-center font-bold text-amber-800 py-1 bg-white rounded-lg border border-amber-300 group-hover:bg-amber-600 group-hover:text-white transition">
+                                <i class="fa-solid fa-plus mr-1"></i> Depositar aquí
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feedback interactivo del Módulo 1 -->
+                    <div id="m1-feedback" class="hidden p-3.5 rounded-xl text-xs leading-relaxed"></div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 MÓDULO 2: LABORATORIO DE BIOELEMENTOS PRIMARIOS (C, H, O, N)
+                 ========================================================= -->
+            <section id="tab-primarios" class="module-section space-y-6 hidden">
+                <!-- Banner del Módulo 2 -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-md border border-accent/20">Módulo 2 • Bloques Mayoritarios (~95%)</span>
+                            <h2 class="text-xl font-extrabold text-slate-800 mt-1.5">Bioelementos Primarios (C, H, O, N)</h2>
+                            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Estructuras químicas estables, capacidades de enlace covalente y arquitectura tridimensional de las biomoléculas.</p>
+                        </div>
+                        <!-- Botonera Selectora de los 4 Elementos -->
+                        <div class="flex gap-1.5 p-1 bg-slate-100 rounded-xl">
+                            <button onclick="inspectChon('O')" id="btn-chon-O" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-accent text-white shadow-xs transition">O (65%)</button>
+                            <button onclick="inspectChon('C')" id="btn-chon-C" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-200 transition">C (18.5%)</button>
+                            <button onclick="inspectChon('H')" id="btn-chon-H" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-200 transition">H (9.5%)</button>
+                            <button onclick="inspectChon('N')" id="btn-chon-N" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-200 transition">N (3.3%)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visor Molecular y Ficha de Propiedades de Enlace -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Ficha Anatómico-Molecular -->
+                    <div class="lg:col-span-7 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span id="chon-percentage-badge" class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-accent-light text-accent border border-accent/20">65.0% Masa Corporal</span>
+                                <h3 id="chon-element-title" class="text-lg font-bold text-slate-800 mt-1">Oxígeno (O)</h3>
+                            </div>
+                            <span id="chon-valence-badge" class="text-xs font-mono text-slate-600 bg-slate-100 px-3 py-1 rounded-lg font-semibold">2 Enlaces Covalentes</span>
+                        </div>
+
+                        <!-- Gráfico SVG Molecular -->
+                        <div class="bg-slate-900 rounded-xl p-4 flex items-center justify-center border border-slate-800 min-h-[200px]" id="chon-svg-container">
+                            <!-- SVG dinámico inyectado por JS -->
+                        </div>
+
+                        <!-- Rol y Fundamento Fisiológico -->
+                        <div class="space-y-2 text-xs leading-relaxed text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <h4 id="chon-role-title" class="font-bold text-slate-800 text-sm text-accent">Componente Mayoritario y Respiración Celular</h4>
+                            <p id="chon-description">
+                                Representa el 65% de la masa corporal total, siendo el bioelemento más abundante debido a su presencia en el agua (H₂O) y en todo tipo de biomoléculas orgánicas.
+                            </p>
+                            <ul id="chon-bullets" class="list-disc pl-4 space-y-1 pt-1 text-[11px] text-slate-700">
+                                <li><strong>Respiración aeróbica:</strong> Aceptor final de electrones en la cadena mitocondrial para formar ATP.</li>
+                                <li><strong>Equilibrio Redox:</strong> Participa en reacciones acopladas con sistemas antioxidantes.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Desafío de Calibración CHON -->
+                    <div class="lg:col-span-5 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fa-solid fa-flask-vial text-accent"></i>
+                                <h3 class="text-base font-bold text-slate-800">Verificación de Parámetros CHON</h3>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4">Relacioná cada bioelemento primario con su porcentaje y función química característica:</p>
+
+                            <div class="space-y-3.5 text-xs">
+                                <div>
+                                    <label class="font-semibold text-slate-700 block mb-1">Carbono (C): Capacidad estructural</label>
+                                    <select id="sel-chon-C" class="w-full p-2 rounded-lg border border-slate-300 bg-white font-medium focus-accent text-xs">
+                                        <option value="">-- Seleccionar propiedad --</option>
+                                        <option value="tetra">18.5% - Tetravalente (4 enlaces covalentes y cadenas estables)</option>
+                                        <option value="ox">65.0% - Aceptor final mitocondrial</option>
+                                        <option value="h">9.5% - Formación de puentes de hidrógeno</option>
+                                        <option value="n">3.3% - Presencia en aminoácidos y bases nitrogenadas</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="font-semibold text-slate-700 block mb-1">Oxígeno (O): Abundancia biológica</label>
+                                    <select id="sel-chon-O" class="w-full p-2 rounded-lg border border-slate-300 bg-white font-medium focus-accent text-xs">
+                                        <option value="">-- Seleccionar propiedad --</option>
+                                        <option value="tetra">18.5% - Tetravalente (4 enlaces covalentes y cadenas estables)</option>
+                                        <option value="ox">65.0% - Componente mayoritario en agua y respiración aeróbica</option>
+                                        <option value="h">9.5% - Puentes de hidrógeno intermoleculares</option>
+                                        <option value="n">3.3% - Exclusivo de ácidos nucleicos</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="font-semibold text-slate-700 block mb-1">Hidrógeno (H): Dinámica acuosa</label>
+                                    <select id="sel-chon-H" class="w-full p-2 rounded-lg border border-slate-300 bg-white font-medium focus-accent text-xs">
+                                        <option value="">-- Seleccionar propiedad --</option>
+                                        <option value="tetra">18.5% - Esqueleto carbonado ramificado</option>
+                                        <option value="ox">65.0% - Bioelemento mayoritario</option>
+                                        <option value="h">9.5% - Agua, pH y cohesión por puentes de hidrógeno</option>
+                                        <option value="n">3.3% - Grupo amino funcional</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="font-semibold text-slate-700 block mb-1">Nitrógeno (N): Moléculas funcionales</label>
+                                    <select id="sel-chon-N" class="w-full p-2 rounded-lg border border-slate-300 bg-white font-medium focus-accent text-xs">
+                                        <option value="">-- Seleccionar propiedad --</option>
+                                        <option value="tetra">18.5% - Cadenas hidrocarbonadas lineales</option>
+                                        <option value="ox">65.0% - Combustión celular</option>
+                                        <option value="h">9.5% - Solvatación acuosa</option>
+                                        <option value="n">3.3% - Esencial en aminoácidos, proteínas y ácidos nucleicos</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button onclick="checkChonQuiz()" class="w-full py-2 bg-accent text-white font-semibold rounded-xl text-xs hover:bg-accent-hover transition shadow-sm">
+                                Comprobar Parámetros CHON
+                            </button>
+                            <div id="chon-quiz-feedback" class="hidden mt-2 p-3 rounded-xl text-xs leading-relaxed"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 MÓDULO 3: ESTACIÓN DE BIOELEMENTOS SECUNDARIOS (~3.9% - 4.5%)
+                 ========================================================= -->
+            <section id="tab-secundarios" class="module-section space-y-6 hidden">
+                <!-- Banner del Módulo 3 -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-md border border-accent/20">Módulo 3 • Electrólitos y Matrices Minerales</span>
+                            <h2 class="text-xl font-extrabold text-slate-800 mt-1.5">Bioelementos Secundarios (~3.9% a 4.5%)</h2>
+                            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Estudio de iones en fluidos biológicos, excitabilidad neuromuscular, cofactores y estructuras de sostén.</p>
+                        </div>
+                        <span class="text-xs font-mono bg-accent-light text-accent px-3 py-1.5 rounded-xl border border-accent/20 font-bold">
+                            7 Elementos Esenciales
+                        </span>
+                    </div>
+
+                    <!-- Botonera de los 7 Elementos Secundarios -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2 mt-4">
+                        <button onclick="inspectSecondary('Ca')" id="sec-btn-Ca" class="p-2.5 rounded-xl border-2 border-accent bg-accent-light text-center transition">
+                            <div class="text-[10px] font-mono text-accent font-bold">Ca²⁺</div>
+                            <div class="text-lg font-extrabold text-slate-800 font-mono">Ca</div>
+                            <div class="text-[10px] font-semibold text-slate-600">Calcio</div>
+                        </button>
+                        <button onclick="inspectSecondary('Na')" id="sec-btn-Na" class="p-2.5 rounded-xl border-2 border-slate-200 hover:border-accent bg-white text-center transition">
+                            <div class="text-[10px] font-mono text-sky-600 font-bold">Na⁺</div>
+                            <div class="text-lg font-extrabold text-slate-800 font-mono">Na</div>
+                            <div class="text-[10px] font-semibold text-slate-600">Sodio</div>
+                        </button>
+                        <button onclick="inspectSecondary('K')" id="sec-btn-K" class="p-2.5 rounded-xl border-2 border-slate-200 hover:border-accent bg-white text-center transition">
+                            <div class="text-[10px] font-mono text-purple-600 font-bold">K⁺</div>
+                            <div class="text-lg font-extrabold text-slate-800 font-mono">K</div>
+                            <div class="text-[10px] font-semibold text-slate-600">Potasio</div>
+                        </button>
+                        <button onclick="inspectSecondary('Mg')" id="sec-btn-Mg" class="p-2.5 rounded-xl border-2 border-slate-200 hover:border-accent bg-white text-center transition">
+                            <div class="text-[10px] font-mono text-emerald-600 font-bold">Mg²⁺</div>
+                            <div class="text-lg font-extrabold text-slate-800 font-mono">Mg</div>
+                            <div class="text-[10px] font-semibold text-slate-600">Magnesio</div>
+                        </button>
+                        <button onclick="inspectSecondary('Cl')" id="sec-btn-Cl" class="p-2.5 rounded-xl border-2 border-slate-200 hover:border-accent bg-white text-center transition">
+                            <div class="text-[10px] font-mono text-lime-600 font-bold">Cl⁻</div>
+                            <div class="text-lg font-extrabold text-slate-800 font-mono">Cl</div>
+                            <div class="text-[10px] font-semibold text-slate-600">Cloro</div>
+                        </button>
+                        <button onclick="inspectSecondary('P')" id="sec-btn-P" class="p-2.5 rounded-xl border-2 border-slate-200 hover:border-accent bg-white text-center transition">
+                            <div class="text-[10px] font-mono text-amber-600 font-bold">PO₄³⁻</div>
+                            <div class="text-lg font-extrabold text-slate-800 font-mono">P</div>
+                            <div class="text-[10px] font-semibold text-slate-600">Fósforo</div>
+                        </button>
+                        <button onclick="inspectSecondary('S')" id="sec-btn-S" class="p-2.5 rounded-xl border-2 border-slate-200 hover:border-accent bg-white text-center transition">
+                            <div class="text-[10px] font-mono text-yellow-600 font-bold">-S-S-</div>
+                            <div class="text-lg font-extrabold text-slate-800 font-mono">S</div>
+                            <div class="text-[10px] font-semibold text-slate-600">Azufre</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Visor Anatomo-Funcional Secundario -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+                    <div id="secondary-detail-box" class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+                        <!-- Inyectado dinámicamente por JS -->
+                    </div>
+                </div>
+
+                <!-- Taller de Correlación Funcional de Secundarios -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+                    <div class="border-b border-slate-100 pb-3">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-accent"></i>
+                            Taller de Correlación: Fisiología de los Secundarios
+                        </h3>
+                        <p class="text-xs text-slate-500">Asociá cada función biológica con el elemento o ion correspondiente.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs" id="secondary-matching-grid">
+                        <!-- Generado por JS -->
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2">
+                        <button onclick="validateSecondaryMatching()" class="px-5 py-2 bg-accent text-white font-semibold rounded-xl text-xs hover:bg-accent-hover transition shadow-sm">
+                            Validar Correlaciones
+                        </button>
+                        <button onclick="resetSecondaryMatching()" class="text-xs text-slate-500 hover:text-accent font-semibold">
+                            Reiniciar Opciones
+                        </button>
+                    </div>
+                    <div id="secondary-matching-feedback" class="hidden p-3.5 rounded-xl text-xs leading-relaxed"></div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 MÓDULO 4: TALLER DE OLIGOELEMENTOS Y FUNCIONES VITALES (<0.5%)
+                 ========================================================= -->
+            <section id="tab-trazas" class="module-section space-y-6 hidden">
+                <!-- Banner del Módulo 4 -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-md border border-accent/20">Módulo 4 • Elementos Traza (&lt; 0.5%)</span>
+                            <h2 class="text-xl font-extrabold text-slate-800 mt-1.5">Atlas de Oligoelementos Esenciales</h2>
+                            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Elementos presentes en concentraciones mínimas pero con un rol catalítico, hematológico, inmunológico y endocrino insustituible.</p>
+                        </div>
+                        <span class="text-xs font-mono bg-amber-100 text-amber-900 border border-amber-300 px-3 py-1.5 rounded-xl font-bold">
+                            Trazas &lt; 0.5%
+                        </span>
+                    </div>
+
+                    <!-- Botonera del Atlas de Trazas -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 mt-4" id="trace-atlas-buttons">
+                        <!-- Generado por JS -->
+                    </div>
+                </div>
+
+                <!-- Detalle del Oligoelemento Seleccionado -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <div id="trace-atlas-detail" class="space-y-3">
+                        <!-- Inyectado por JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 MÓDULO 5: CASOS CLÍNICOS KINESIOLÓGICOS Y DEFICIENCIAS
+                 ========================================================= -->
+            <section id="tab-clinica" class="module-section space-y-6 hidden">
+                <!-- Banner del Módulo 5 -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <span class="text-xs font-bold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-md border border-accent/20">Módulo 5 • Integración Patológica y Salud</span>
+                    <h2 class="text-xl font-extrabold text-slate-800 mt-1.5">Simulador Clínico de Desequilibrios por Deficiencia</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Diagnostica cuadros de fatiga, alteraciones tiroideas, retardo en cicatrización y fragilidad ósea analizando la deficiencia de bioelementos y oligoelementos.</p>
+                </div>
+
+                <!-- Casos Clínicos -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-5">
+                    <!-- Selector de Casos -->
+                    <div class="flex flex-wrap gap-2 border-b border-slate-100 pb-3" id="clinical-case-tabs">
+                        <!-- Generado por JS -->
+                    </div>
+
+                    <!-- Expediente del Paciente -->
+                    <div id="clinical-case-display" class="bg-slate-900 text-slate-100 rounded-xl p-5 border border-slate-800 space-y-3">
+                        <!-- Generado por JS -->
+                    </div>
+
+                    <!-- Panel de Prescripción Terapéutica -->
+                    <div class="space-y-2">
+                        <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Selecciona el Bioelemento / Oligoelemento que restaura la homeostasis:</span>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1" id="clinical-treatment-options">
+                            <!-- Generado por JS -->
+                        </div>
+                    </div>
+
+                    <!-- Feedback Clínico -->
+                    <div id="clinical-feedback-box" class="hidden p-4 rounded-xl text-xs leading-relaxed"></div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Modal: Guía de Uso del Simulador -->
+    <div id="modal-tutorial" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-accent p-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                    <h3 class="font-bold text-base">Guía de Uso del Simulador y Orientación Pedagógica</h3>
+                </div>
+                <button onclick="closeTutorial()" class="text-white hover:text-gray-200 transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto space-y-5 text-xs md:text-sm text-gray-600 custom-scroll leading-relaxed">
+                <div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-1 text-accent flex items-center gap-2">
+                        <i class="fa-solid fa-bullseye"></i> 1. Propósito Tecnopedagógico
+                    </h4>
+                    <p>
+                        Este simulador interactivo está concebido para estudiantes del curso de ingreso a la <strong>Licenciatura en Kinesiología y Fisiatría (Facultad de Ciencias Médicas - Universidad Católica de Cuyo)</strong>. Su objetivo es estructurar el conocimiento sobre los <strong>bioelementos primarios</strong> (C, H, O, N), <strong>secundarios</strong> (Ca, Na, K, Mg, Cl, P, S) y <strong>oligoelementos</strong> (Fe, I, Zn, Cu, Co, F, Se), vinculando la fisicoquímica molecular con los procesos fisiológicos de contracción muscular, excitabilidad neuromuscular, sostén óseo y equilibrio hidroelectrolítico.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-2 text-accent flex items-center gap-2">
+                        <i class="fa-solid fa-compass"></i> 2. Guía Detallada de Módulos y Herramientas Interactivas
+                    </h4>
+                    
+                    <div class="space-y-3.5">
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+                            <span class="font-bold text-gray-800 text-xs text-accent flex items-center gap-1.5">
+                                <i class="fa-solid fa-microscope"></i> Módulo 1: Composición Celular y Abundancia
+                            </span>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                • <strong>Laboratorio Espectrométrico:</strong> Seleccioná cada muestra química de la bandeja superior y clasificala según su abundancia corporal: Primarios (~95%), Secundarios (~3.9% a 4.5%) y Oligoelementos (&lt; 0.5%). Obtené retroalimentación inmediata sobre la masa celular total.
+                            </p>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+                            <span class="font-bold text-gray-800 text-xs text-accent flex items-center gap-1.5">
+                                <i class="fa-solid fa-atom"></i> Módulo 2: Laboratorio de Bioelementos Primarios (C, H, O, N)
+                            </span>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                • <strong>Visor Molecular:</strong> Explorá las propiedades de enlace del Carbono (tetravalente y cadenas estables), Hidrógeno (puentes de hidrógeno y agua), Oxígeno (respiración aeróbica y antioxidante) y Nitrógeno (aminoácidos y bases nitrogenadas).<br>
+                                • <strong>Verificación de Parámetros:</strong> Calibrá la correspondencia entre porcentaje y rol funcional sin penalizaciones.
+                            </p>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+                            <span class="font-bold text-gray-800 text-xs text-accent flex items-center gap-1.5">
+                                <i class="fa-solid fa-bolt"></i> Módulo 3: Bioelementos Secundarios (Electrólitos y Sostén)
+                            </span>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                • <strong>Estación de Fisiología Iónica:</strong> Analizá el rol crítico del Calcio en la contracción muscular y coagulación, el Sodio y Potasio en el potencial de acción y equilibrio hídrico, el Magnesio en el ATP y el Fósforo y Azufre en membranas y proteínas.<br>
+                                • <strong>Taller de Correlación:</strong> Asigná funciones específicas a cada elemento con validación paso a paso.
+                            </p>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+                            <span class="font-bold text-gray-800 text-xs text-accent flex items-center gap-1.5">
+                                <i class="fa-solid fa-gem"></i> Módulo 4: Atlas de Oligoelementos (Trazas &lt; 0.5%)
+                            </span>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                • <strong>Catálogo de Funciones Vitales:</strong> Profundizá en el rol del Hierro (hemoglobina), Yodo (tiroides), Zinc (sistema inmune), Cobre/Cobalto (eritropoyesis y vitamina B12), Flúor (fluorapatita dental) y Selenio (defensa antioxidante).
+                            </p>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+                            <span class="font-bold text-gray-800 text-xs text-accent flex items-center gap-1.5">
+                                <i class="fa-solid fa-stethoscope"></i> Módulo 5: Casos Clínicos y Patologías por Deficiencia
+                            </span>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                • <strong>Simulador Clínico Asistencial:</strong> Diagnosticá 6 expedientes clínicos reales identificados por número de caso (anemia ferropénica, hipotiroidismo/bocio, retraso cicatrizal, anemia perniciosa/neuropatía, caries por falta de fluorapatita y estrés oxidativo membranal).<br>
+                                • <strong>Razonamiento Bioquímico:</strong> A partir de la anamnesis, sintomatología y valores analíticos de laboratorio, seleccioná el bioelemento u oligoelemento específico que corrige el cuadro, recibiendo retroalimentación explicativa inmediata con fundamentos fisiopatológicos.
+                            </p>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+                            <span class="font-bold text-gray-800 text-xs text-accent flex items-center gap-1.5">
+                                <i class="fa-solid fa-book-bookmark"></i> Botón Vademécum (Barra Superior)
+                            </span>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                • Consultá en todo momento la tabla de abundancia porcentual, fórmulas y estados iónicos de referencia biológica.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-1 text-accent flex items-center gap-2">
+                        <i class="fa-solid fa-lightbulb"></i> 3. Navegación Libre y Aprendizaje Autónomo
+                    </h4>
+                    <p>
+                        El entorno respeta las pautas institucionales de la UCCuyo: sin cronómetros restrictivos, penalizaciones punitivas ni bloqueos de avance. Podés recorrer los módulos a tu propio ritmo para afianzar tus competencias biomédicas.
+                    </p>
+                </div>
+            </div>
+
+            <div class="p-4 bg-gray-50 border-t border-gray-100 flex justify-end">
+                <button onclick="closeTutorial()" class="px-4 py-2 bg-accent text-white rounded-xl text-xs font-semibold hover:bg-accent-hover transition">
+                    Entendido, comenzar exploración
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Formulario / Vademécum de Bioelementos -->
+    <div id="modal-formulas" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white max-w-2xl w-full rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-accent p-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-book-bookmark text-xl"></i>
+                    <h3 class="font-bold text-base">Vademécum Oficial: Clasificación de Bioelementos</h3>
+                </div>
+                <button onclick="closeFormulasModal()" class="text-white hover:text-gray-200 transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto space-y-4 text-xs text-gray-700 custom-scroll leading-relaxed">
+                <div class="p-3.5 rounded-xl bg-gray-50 border border-gray-200">
+                    <h4 class="font-bold text-accent text-xs uppercase mb-1">1. Bioelementos Primarios (~95% de la Masa Corporal)</h4>
+                    <p class="text-[11px] text-gray-600 mb-2">Estructuran las biomoléculas orgánicas (glúcidos, lípidos, proteínas, ácidos nucleicos):</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono text-center">
+                        <div class="p-2 bg-white rounded border border-gray-200"><strong>Oxígeno (O)</strong><br><span class="text-accent font-bold">65.0%</span></div>
+                        <div class="p-2 bg-white rounded border border-gray-200"><strong>Carbono (C)</strong><br><span class="text-accent font-bold">18.5%</span></div>
+                        <div class="p-2 bg-white rounded border border-gray-200"><strong>Hidrógeno (H)</strong><br><span class="text-accent font-bold">9.5%</span></div>
+                        <div class="p-2 bg-white rounded border border-gray-200"><strong>Nitrógeno (N)</strong><br><span class="text-accent font-bold">3.3%</span></div>
+                    </div>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-gray-50 border border-gray-200">
+                    <h4 class="font-bold text-accent text-xs uppercase mb-1">2. Bioelementos Secundarios (~3.9% a 4.5%)</h4>
+                    <p class="text-[11px] text-gray-600 mb-2">Formas iónicas y funciones fisiológicas de sostén y bioelectricidad:</p>
+                    <ul class="space-y-1 text-[11px] text-gray-700">
+                        <li>• <strong>Calcio (Ca²⁺):</strong> Mineralización de hidroxiapatita ósea, contracción muscular y coagulación.</li>
+                        <li>• <strong>Sodio (Na⁺):</strong> Catión extracelular principal, osmolaridad plasmática y potencial de acción.</li>
+                        <li>• <strong>Potasio (K⁺):</strong> Catión intracelular primordial, potencial de reposo y excitabilidad neuromuscular.</li>
+                        <li>• <strong>Magnesio (Mg²⁺):</strong> Cofactor catalítico en >300 enzimas y estabilizador del complejo Mg-ATP²⁻.</li>
+                        <li>• <strong>Cloro (Cl⁻):</strong> Anión extracelular mayoritario, balance hídrico y secreción de HCl gástrico.</li>
+                        <li>• <strong>Fósforo (PO₄³⁻):</strong> Enlaces de alta energía (ATP), cabezas de fosfolípidos y matriz ósea.</li>
+                        <li>• <strong>Azufre (S):</strong> Aminoácidos cisteína y metionina; puentes disulfuro (-S-S-) en proteínas.</li>
+                    </ul>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-accent-light border border-accent/20 text-gray-800">
+                    <h4 class="font-bold text-accent text-xs uppercase mb-1">3. Oligoelementos o Elementos Traza (&lt; 0.5%)</h4>
+                    <p class="text-[11px] leading-relaxed text-gray-600">
+                        • <strong>Hierro (Fe):</strong> Átomo central del grupo hemo en la hemoglobina y citocromos mitocondriales.<br>
+                        • <strong>Yodo (I):</strong> Biosíntesis de hormonas tiroideas T3 (triyodotironina) y T4 (tiroxina).<br>
+                        • <strong>Zinc (Zn):</strong> Inmunocompetencia, síntesis de ADN, cicatrización y cofactores con dedos de zinc.<br>
+                        • <strong>Cobre (Cu) y Cobalto (Co):</strong> Maduración eritrocitaria y núcleo catalítico de la Vitamina B12.<br>
+                        • <strong>Flúor (F):</strong> Formación de fluorapatita para la resistencia del esmalte dental frente a caries.<br>
+                        • <strong>Selenio (Se):</strong> Antioxidante celular como constituyente de la glutatión peroxidasa (GPx).
+                    </p>
+                </div>
+            </div>
+
+            <div class="p-4 bg-gray-50 border-t border-gray-100 flex justify-end">
+                <button onclick="closeFormulasModal()" class="px-4 py-2 bg-accent text-white rounded-xl text-xs font-semibold hover:bg-accent-hover transition">
+                    Cerrar Vademécum
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de Página Institucional Oficial -->
+    <footer class="bg-white border-t border-gray-200 py-3 text-center text-xs text-gray-500 font-medium">
+        Desarrollado por vesalio - Todos los derechos reservados
+    </footer>
+
+    <!-- Lógica de la Aplicación en JavaScript -->
+    <script>
+        // ==========================================
+        // ESTADO GLOBAL Y DATOS DEL SIMULADOR
+        // ==========================================
+        const state = {
+            selectedSampleMod1: null,
+            mod1Samples: [
+                { symbol: 'O', name: 'Oxígeno (65%)', category: 'primario' },
+                { symbol: 'C', name: 'Carbono (18.5%)', category: 'primario' },
+                { symbol: 'H', name: 'Hidrógeno (9.5%)', category: 'primario' },
+                { symbol: 'N', name: 'Nitrógeno (3.3%)', category: 'primario' },
+                { symbol: 'Ca', name: 'Calcio (Ca²⁺)', category: 'secundario' },
+                { symbol: 'Na', name: 'Sodio (Na⁺)', category: 'secundario' },
+                { symbol: 'K', name: 'Potasio (K⁺)', category: 'secundario' },
+                { symbol: 'Mg', name: 'Magnesio (Mg²⁺)', category: 'secundario' },
+                { symbol: 'Fe', name: 'Hierro (Traza)', category: 'oligoelemento' },
+                { symbol: 'I', name: 'Yodo (Traza)', category: 'oligoelemento' },
+                { symbol: 'Zn', name: 'Zinc (Traza)', category: 'oligoelemento' },
+                { symbol: 'Co', name: 'Cobalto (B12)', category: 'oligoelemento' }
+            ],
+            mod1Assigned: {
+                primario: [],
+                secundario: [],
+                oligoelemento: []
+            },
+            clinicalCurrentCase: 0
+        };
+
+        // Navegación lateral entre módulos
+        function switchTab(targetId) {
+            document.querySelectorAll('.module-section').forEach(sec => sec.classList.add('hidden'));
+            const target = document.getElementById(targetId);
+            if (target) target.classList.remove('hidden');
+
+            const btnIds = ['btn-tab-intro', 'btn-tab-primarios', 'btn-tab-secundarios', 'btn-tab-trazas', 'btn-tab-clinica'];
+            btnIds.forEach(id => {
+                const btn = document.getElementById(id);
+                if (!btn) return;
+                btn.className = "text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition";
+            });
+
+            const activeBtn = document.getElementById('btn-' + targetId);
+            if (activeBtn) {
+                activeBtn.className = "bg-accent text-white flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-semibold transition shadow-sm";
+            }
+        }
+
+        // ==========================================
+        // MÓDULO 1: CLASIFICADOR DE ABUNDANCIA
+        // ==========================================
+        function renderMod1Classifier() {
+            const pool = document.getElementById('m1-unassigned-pool');
+            if (!pool) return;
+            pool.innerHTML = '';
+
+            const assignedSymbols = new Set([
+                ...state.mod1Assigned.primario,
+                ...state.mod1Assigned.secundario,
+                ...state.mod1Assigned.oligoelemento
+            ]);
+
+            const unassigned = state.mod1Samples.filter(s => !assignedSymbols.has(s.symbol));
+
+            if (unassigned.length === 0) {
+                pool.innerHTML = '<span class="text-xs text-emerald-700 font-semibold flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> ¡Todas las muestras químicas han sido clasificadas en sus compartimientos!</span>';
+            } else {
+                unassigned.forEach(sample => {
+                    const btn = document.createElement('button');
+                    const isSelected = state.selectedSampleMod1 && state.selectedSampleMod1.symbol === sample.symbol;
+                    btn.className = 'element-pill px-3 py-1.5 rounded-lg border text-xs font-mono font-bold flex items-center gap-1.5 transition ' + 
+                        (isSelected ? 'bg-accent text-white border-accent shadow-sm' : 'bg-white text-slate-700 border-slate-300 hover:border-accent');
+                    btn.innerHTML = '<span class="w-2 h-2 rounded-full ' + (isSelected ? 'bg-white' : 'bg-accent') + '"></span>' + sample.name;
+                    btn.onclick = () => {
+                        state.selectedSampleMod1 = sample;
+                        renderMod1Classifier();
+                    };
+                    pool.appendChild(btn);
+                });
+            }
+
+            ['primario', 'secundario', 'oligoelemento'].forEach(cat => {
+                const b = document.getElementById('bucket-' + cat);
+                if (!b) return;
+                b.innerHTML = '';
+                state.mod1Assigned[cat].forEach(sym => {
+                    const tag = document.createElement('span');
+                    tag.className = 'px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-white text-slate-800 border border-slate-200 shadow-2xs';
+                    tag.textContent = sym;
+                    b.appendChild(tag);
+                });
+            });
+        }
+
+        function assignSelectedElement(targetCategory) {
+            const fb = document.getElementById('m1-feedback');
+            if (!state.selectedSampleMod1) {
+                if (fb) {
+                    fb.classList.remove('hidden');
+                    fb.className = "mt-3 p-3 rounded-xl text-xs bg-amber-50 text-amber-900 border border-amber-200";
+                    fb.innerHTML = "<strong>Atención:</strong> Primero haz clic en una de las muestras químicas de la bandeja superior y luego selecciona el compartimiento de destino.";
+                }
+                return;
+            }
+
+            const current = state.selectedSampleMod1;
+            if (current.category === targetCategory) {
+                state.mod1Assigned[targetCategory].push(current.symbol);
+                state.selectedSampleMod1 = null;
+                renderMod1Classifier();
+
+                if (fb) {
+                    fb.classList.remove('hidden');
+                    fb.className = "mt-3 p-3 rounded-xl text-xs bg-emerald-50 text-emerald-900 border border-emerald-200";
+                    fb.innerHTML = "<strong>¡Correcto!</strong> El elemento <strong>" + current.name + "</strong> fue clasificado correctamente en la categoría correspondiente.";
+                }
+            } else {
+                if (fb) {
+                    fb.classList.remove('hidden');
+                    fb.className = "mt-3 p-3 rounded-xl text-xs bg-rose-50 text-rose-900 border border-rose-200";
+                    fb.innerHTML = "<strong>Clasificación incorrecta:</strong> Revisa la abundancia de <strong>" + current.name + "</strong> en el cuerpo humano y vuelve a intentarlo.";
+                }
+            }
+        }
+
+        function resetMod1Classification() {
+            state.selectedSampleMod1 = null;
+            state.mod1Assigned = { primario: [], secundario: [], oligoelemento: [] };
+            const fb = document.getElementById('m1-feedback');
+            if (fb) fb.classList.add('hidden');
+            renderMod1Classifier();
+        }
+
+        // ==========================================
+        // MÓDULO 2: CHON (PRIMARIOS)
+        // ==========================================
+        const chonDatabase = {
+            'O': {
+                symbol: 'O',
+                name: 'Oxígeno',
+                percentage: '65.0% Masa Corporal',
+                valence: '2 Enlaces Covalentes',
+                roleTitle: 'Componente Mayoritario y Respiración Celular',
+                description: 'Representa el 65% de la masa corporal total, siendo el bioelemento más abundante debido a su presencia en el agua (H₂O) y en todo tipo de biomoléculas orgánicas.',
+                bullets: [
+                    '<strong>Respiración aeróbica:</strong> Aceptor final de electrones en la cadena mitocondrial para formar ATP.',
+                    '<strong>Equilibrio Redox:</strong> Participa en reacciones acopladas con sistemas antioxidantes.'
+                ],
+                svg: "\n                    <svg viewBox=\"0 0 220 160\" class=\"w-48 h-36\">\n                        <defs>\n                            <radialGradient id=\"gradO\" cx=\"50%\" cy=\"50%\" r=\"50%\">\n                                <stop offset=\"0%\" stop-color=\"#436600\" />\n                                <stop offset=\"100%\" stop-color=\"#243700\" />\n                            </radialGradient>\n                        </defs>\n                        <circle cx=\"110\" cy=\"80\" r=\"65\" fill=\"none\" stroke=\"#659b00\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/>\n                        <circle cx=\"110\" cy=\"80\" r=\"40\" fill=\"none\" stroke=\"#84c400\" stroke-width=\"1.5\"/>\n                        <circle cx=\"110\" cy=\"80\" r=\"24\" fill=\"url(#gradO)\" />\n                        <text x=\"110\" y=\"86\" text-anchor=\"middle\" fill=\"white\" font-family=\"JetBrains Mono\" font-weight=\"bold\" font-size=\"15\">O (65%)</text>\n                        <circle cx=\"110\" cy=\"15\" r=\"5\" fill=\"#84c400\" />\n                        <circle cx=\"110\" cy=\"145\" r=\"5\" fill=\"#84c400\" />\n                        <circle cx=\"45\" cy=\"80\" r=\"5\" fill=\"#84c400\" />\n                        <circle cx=\"175\" cy=\"80\" r=\"5\" fill=\"#84c400\" />\n                    </svg>\n                "
+            },
+            'C': {
+                symbol: 'C',
+                name: 'Carbono',
+                percentage: '18.5% Masa Corporal',
+                valence: 'Tetravalente (4 Enlaces Covalentes Estables)',
+                roleTitle: 'Columna Vertebral de las Biomoléculas Orgánicas',
+                description: 'Constituye el 18.5% de la masa corporal. Su configuración electrónica le confiere la capacidad de formar hasta 4 enlaces covalentes fuertes y estables consigo mismo y otros elementos.',
+                bullets: [
+                    '<strong>Cadenas Estables:</strong> Forma esqueletos lineales, ramificados y anillos cíclicos de enorme estabilidad termodinámica.',
+                    '<strong>Versatilidad Tridimensional:</strong> Genera enlaces simples (C-C), dobles (C=C) y triples (C≡C).'
+                ],
+                svg: "\n                    <svg viewBox=\"0 0 220 160\" class=\"w-48 h-36\">\n                        <line x1=\"110\" y1=\"80\" x2=\"110\" y2=\"20\" stroke=\"#64748b\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n                        <line x1=\"110\" y1=\"80\" x2=\"50\" y2=\"125\" stroke=\"#64748b\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n                        <line x1=\"110\" y1=\"80\" x2=\"170\" y2=\"125\" stroke=\"#64748b\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n                        <line x1=\"110\" y1=\"80\" x2=\"150\" y2=\"45\" stroke=\"#94a3b8\" stroke-width=\"3\" stroke-dasharray=\"4 2\" stroke-linecap=\"round\"/>\n                        <circle cx=\"110\" cy=\"20\" r=\"11\" fill=\"#436600\"/>\n                        <circle cx=\"50\" cy=\"125\" r=\"11\" fill=\"#436600\"/>\n                        <circle cx=\"170\" cy=\"125\" r=\"11\" fill=\"#436600\"/>\n                        <circle cx=\"150\" cy=\"45\" r=\"9\" fill=\"#659b00\"/>\n                        <circle cx=\"110\" cy=\"80\" r=\"25\" fill=\"#1e293b\"/>\n                        <text x=\"110\" y=\"86\" text-anchor=\"middle\" fill=\"white\" font-family=\"JetBrains Mono\" font-weight=\"bold\" font-size=\"14\">C (4e⁻)</text>\n                    </svg>\n                "
+            },
+            'H': {
+                symbol: 'H',
+                name: 'Hidrógeno',
+                percentage: '9.5% Masa Corporal',
+                valence: '1 Enlace + Puentes de Hidrógeno',
+                roleTitle: 'Estructura del Agua y Cohesión por Puentes de Hidrógeno',
+                description: 'Representa el 9.5% de la masa corporal. Esencial en la molécula de agua (H₂O), el equilibrio ácido-base y la estabilización de conformaciones moleculares complejas.',
+                bullets: [
+                    '<strong>Puentes de Hidrógeno:</strong> Interacciones dipolo-dipolo que sostienen la estructura secundaria y terciaria de proteínas.',
+                    '<strong>Doble Hélice:</strong> Conexión fundamental entre pares de bases complementarias en el ADN.'
+                ],
+                svg: "\n                    <svg viewBox=\"0 0 220 160\" class=\"w-48 h-36\">\n                        <line x1=\"75\" y1=\"80\" x2=\"40\" y2=\"50\" stroke=\"#38bdf8\" stroke-width=\"4\"/>\n                        <line x1=\"75\" y1=\"80\" x2=\"40\" y2=\"110\" stroke=\"#38bdf8\" stroke-width=\"4\"/>\n                        <line x1=\"115\" y1=\"80\" x2=\"165\" y2=\"80\" stroke=\"#f59e0b\" stroke-width=\"3\" stroke-dasharray=\"4 4\"/>\n                        <text x=\"140\" y=\"70\" text-anchor=\"middle\" fill=\"#d97706\" font-size=\"9\" font-weight=\"bold\">Puente H</text>\n                        <circle cx=\"75\" cy=\"80\" r=\"20\" fill=\"#0284c7\"/>\n                        <text x=\"75\" y=\"85\" text-anchor=\"middle\" fill=\"white\" font-size=\"11\" font-weight=\"bold\">Oδ⁻</text>\n                        <circle cx=\"40\" cy=\"50\" r=\"12\" fill=\"#38bdf8\"/>\n                        <text x=\"40\" y=\"54\" text-anchor=\"middle\" fill=\"white\" font-size=\"9\" font-weight=\"bold\">Hδ⁺</text>\n                        <circle cx=\"40\" cy=\"110\" r=\"12\" fill=\"#38bdf8\"/>\n                        <text x=\"40\" y=\"114\" text-anchor=\"middle\" fill=\"white\" font-size=\"9\" font-weight=\"bold\">Hδ⁺</text>\n                        <circle cx=\"115\" cy=\"80\" r=\"12\" fill=\"#38bdf8\"/>\n                        <text x=\"115\" y=\"84\" text-anchor=\"middle\" fill=\"white\" font-size=\"9\" font-weight=\"bold\">Hδ⁺</text>\n                        <circle cx=\"180\" cy=\"80\" r=\"18\" fill=\"#436600\"/>\n                        <text x=\"180\" y=\"85\" text-anchor=\"middle\" fill=\"white\" font-size=\"10\" font-weight=\"bold\">Nδ⁻</text>\n                    </svg>\n                "
+            },
+            'N': {
+                symbol: 'N',
+                name: 'Nitrógeno',
+                percentage: '3.3% Masa Corporal',
+                valence: '3 Enlaces (Grupo Amino -NH₂)',
+                roleTitle: 'Pilar de Aminoácidos, Proteínas y Ácidos Nucleicos',
+                description: 'Constituye el 3.3% de la masa corporal. Elemento definitorio de las unidades estructurales y catalíticas (proteínas) y portadoras de la herencia (ADN y ARN).',
+                bullets: [
+                    '<strong>Aminoácidos y Proteínas:</strong> Forma el grupo funcional amino (-NH₂) y el enlace peptídico.',
+                    '<strong>Bases Nitrogenadas:</strong> Estructura purinas y pirimidinas en los ácidos nucleicos.'
+                ],
+                svg: "\n                    <svg viewBox=\"0 0 220 160\" class=\"w-48 h-36\">\n                        <line x1=\"110\" y1=\"80\" x2=\"60\" y2=\"45\" stroke=\"#436600\" stroke-width=\"4\"/>\n                        <line x1=\"110\" y1=\"80\" x2=\"60\" y2=\"115\" stroke=\"#436600\" stroke-width=\"4\"/>\n                        <line x1=\"110\" y1=\"80\" x2=\"170\" y2=\"80\" stroke=\"#334155\" stroke-width=\"5\"/>\n                        <circle cx=\"60\" cy=\"45\" r=\"12\" fill=\"#84c400\"/>\n                        <text x=\"60\" y=\"49\" text-anchor=\"middle\" fill=\"white\" font-size=\"10\" font-weight=\"bold\">H</text>\n                        <circle cx=\"60\" cy=\"115\" r=\"12\" fill=\"#84c400\"/>\n                        <text x=\"60\" y=\"119\" text-anchor=\"middle\" fill=\"white\" font-size=\"10\" font-weight=\"bold\">H</text>\n                        <circle cx=\"170\" cy=\"80\" r=\"17\" fill=\"#475569\"/>\n                        <text x=\"170\" y=\"84\" text-anchor=\"middle\" fill=\"white\" font-size=\"11\" font-weight=\"bold\">Cα</text>\n                        <circle cx=\"110\" cy=\"80\" r=\"24\" fill=\"#436600\"/>\n                        <text x=\"110\" y=\"85\" text-anchor=\"middle\" fill=\"white\" font-family=\"JetBrains Mono\" font-size=\"13\" font-weight=\"bold\">N (3.3%)</text>\n                    </svg>\n                "
+            }
+        };
+
+        function inspectChon(sym) {
+            const el = chonDatabase[sym];
+            if (!el) return;
+
+            ['O', 'C', 'H', 'N'].forEach(s => {
+                const btn = document.getElementById('btn-chon-' + s);
+                if (!btn) return;
+                if (s === sym) {
+                    btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-accent text-white shadow-xs transition";
+                } else {
+                    btn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-200 transition";
+                }
+            });
+
+            document.getElementById('chon-percentage-badge').textContent = el.percentage;
+            document.getElementById('chon-element-title').textContent = el.name + ' (' + el.symbol + ')';
+            document.getElementById('chon-valence-badge').textContent = el.valence;
+            document.getElementById('chon-role-title').textContent = el.roleTitle;
+            document.getElementById('chon-description').innerHTML = el.description;
+
+            const ul = document.getElementById('chon-bullets');
+            ul.innerHTML = '';
+            el.bullets.forEach(b => {
+                const li = document.createElement('li');
+                li.innerHTML = b;
+                ul.appendChild(li);
+            });
+
+            document.getElementById('chon-svg-container').innerHTML = el.svg;
+        }
+
+        function checkChonQuiz() {
+            const cVal = document.getElementById('sel-chon-C').value;
+            const oVal = document.getElementById('sel-chon-O').value;
+            const hVal = document.getElementById('sel-chon-H').value;
+            const nVal = document.getElementById('sel-chon-N').value;
+            const fb = document.getElementById('chon-quiz-feedback');
+            fb.classList.remove('hidden');
+
+            if (!cVal || !oVal || !hVal || !nVal) {
+                fb.className = "mt-2 p-3 rounded-xl text-xs bg-amber-50 text-amber-900 border border-amber-200";
+                fb.innerHTML = "<strong>Incompleto:</strong> Por favor responde la opción de cada uno de los 4 bioelementos.";
+                return;
+            }
+
+            if (cVal === 'tetra' && oVal === 'ox' && hVal === 'h' && nVal === 'n') {
+                fb.className = "mt-2 p-3 rounded-xl text-xs bg-emerald-50 text-emerald-900 border border-emerald-200";
+                fb.innerHTML = "<strong>¡Excelente calibración!</strong> Has identificado con exactitud la tetravalencia del Carbono (18.5%), la abundancia oxidativa del Oxígeno (65%), la dinámica de puentes de H en agua (9.5%) y la presencia de Nitrógeno en aminoácidos y nucleótidos (3.3%).";
+            } else {
+                fb.className = "mt-2 p-3 rounded-xl text-xs bg-rose-50 text-rose-900 border border-rose-200";
+                fb.innerHTML = "<strong>Parámetros discordantes:</strong> Verifica que cada elemento coincida con su porcentaje teórico y rol molecular específico.";
+            }
+        }
+
+        // ==========================================
+        // MÓDULO 3: SECUNDARIOS & SOSTÉN
+        // ==========================================
+        const secondaryDatabase = {
+            'Ca': {
+                symbol: 'Ca',
+                ion: 'Ca²⁺',
+                name: 'Calcio',
+                compartment: 'Matriz Ósea (Hidroxiapatita) y Señalización Intracelular',
+                title: 'Estructuras de Sostén (Huesos), Contracción Muscular y Coagulación',
+                description: 'En forma mineralizada constituye la matriz esquelética de sostén. Como ion libre (Ca²⁺) desencadena el deslizamiento de actina y miosina en la contracción muscular y activa enzimas de la cascada de coagulación sanguínea.',
+                physioPoints: [
+                    '<strong>Acoplamiento excitación-contracción:</strong> Liberado desde el retículo sarcoplásmico al unirse a la troponina C.',
+                    '<strong>Hemostasia:</strong> Factor IV de la coagulación indispensable para la conversión de protrombina en trombina.'
+                ]
+            },
+            'Na': {
+                symbol: 'Na',
+                ion: 'Na⁺',
+                name: 'Sodio',
+                compartment: 'Fluido Extracelular (Catión Principal ~140 mEq/L)',
+                title: 'Catión Extracelular Principal y Equilibrio Hídrico',
+                description: 'Determina primordialmente la osmolaridad del líquido extracelular y el volumen circulante. Su influjo pasivo masivo a través de canales dependientes de voltaje genera la fase de despolarización del potencial de acción nervioso y muscular.',
+                physioPoints: [
+                    '<strong>Gradiente Electroquímico:</strong> Mantenido activamente por la bomba Na⁺/K⁺ ATPasa.',
+                    '<strong>Volemia:</strong> Regula el volumen arterial efectivo y la presión hidrostática.'
+                ]
+            },
+            'K': {
+                symbol: 'K',
+                ion: 'K⁺',
+                name: 'Potasio',
+                compartment: 'Fluido Intracelular (Catión Principal ~150 mEq/L)',
+                title: 'Catión Intracelular Principal y Conducción Nerviosa',
+                description: 'Principal determinante del potencial de membrana en reposo y responsable directo de la repolarización durante el impulso nervioso y cardíaco.',
+                physioPoints: [
+                    '<strong>Excitabilidad Neuromuscular:</strong> Variaciones en el K⁺ sérico alteran críticamente la contractilidad miocárdica.',
+                    '<strong>Equilibrio Ácido-Base:</strong> Intercambio celular con protones H⁺ para amortiguar desviaciones de pH.'
+                ]
+            },
+            'Mg': {
+                symbol: 'Mg',
+                ion: 'Mg²⁺',
+                name: 'Magnesio',
+                compartment: 'Medio Intracelular / Complejos Enzimáticos',
+                title: 'Cofactor Enzimático y Estabilización del ATP',
+                description: 'Actúa como cofactor esencial en más de 300 enzimas metabólicas. Se enlaza a los grupos fosfato cargados negativamente del trifosfato de adenosina formando el complejo activo Mg-ATP²⁻.',
+                physioPoints: [
+                    '<strong>Bioenergética:</strong> Todo gasto de ATP requiere magnesio para estabilizar su conformación.',
+                    '<strong>Relajación Muscular:</strong> Bloqueador natural de canales de calcio que favorece el cese del tono muscular.'
+                ]
+            },
+            'Cl': {
+                symbol: 'Cl',
+                ion: 'Cl⁻',
+                name: 'Cloro',
+                compartment: 'Fluido Extracelular y Jugos Gástricos',
+                title: 'Balance Hídrico y Secreción de HCl Gástrico',
+                description: 'Principal anión extracelular acompañante del sodio; preserva la neutralidad eléctrica de los compartimientos líquidos y forma ácido clorhídrico (HCl) para la digestión en el estómago.',
+                physioPoints: [
+                    '<strong>Electroneutralidad:</strong> Mecanismo de intercambio cloruro/bicarbonato en eritrocitos (efecto Hamburger).',
+                    '<strong>pH Gástrico:</strong> Mantiene la acidez gástrica (pH 1.5 - 2.0).'
+                ]
+            },
+            'P': {
+                symbol: 'P',
+                ion: 'PO₄³⁻',
+                name: 'Fósforo',
+                compartment: 'Membranas Lipídicas, Huesos y Nucleótidos',
+                title: 'Transferencia Energética (ATP), Fosfolípidos y Huesos',
+                description: 'Constituye la cabeza polar de los fosfolípidos de membrana, los enlaces de alta energía del ATP y se asocia con el calcio en la hidroxiapatita esquelética.',
+                physioPoints: [
+                    '<strong>Bicapa Lipídica:</strong> Permite la formación de membranas celulares selectivas.',
+                    '<strong>Sistema Buffer:</strong> El fosfato actúa como amortiguador intracelular y renal del pH.'
+                ]
+            },
+            'S': {
+                symbol: 'S',
+                ion: '-S-S-',
+                name: 'Azufre',
+                compartment: 'Proteínas Estructurales y Enzimáticas',
+                title: 'Aminoácidos Específicos y Puentes Disulfuro',
+                description: 'Presente en los aminoácidos cisteína y metionina. La unión covalente de dos cisteínas forma puentes disulfuro (-S-S-), otorgando rigidez y estabilidad tridimensional a proteínas como la queratina y el colágeno.',
+                physioPoints: [
+                    '<strong>Estructura Terciaria:</strong> Consolida el plegamiento definitivo de proteínas contráctiles y plasmáticas.',
+                    '<strong>Desintoxicación:</strong> Participa en la síntesis de glutatión y metabolismo de xenobióticos.'
+                ]
+            }
+        };
+
+        function inspectSecondary(sym) {
+            const d = secondaryDatabase[sym];
+            if (!d) return;
+
+            Object.keys(secondaryDatabase).forEach(k => {
+                const btn = document.getElementById('sec-btn-' + k);
+                if (!btn) return;
+                if (k === sym) {
+                    btn.className = "p-2.5 rounded-xl border-2 border-accent bg-accent-light text-center transition";
+                } else {
+                    btn.className = "p-2.5 rounded-xl border-2 border-slate-200 hover:border-accent bg-white text-center transition";
+                }
+            });
+
+            const box = document.getElementById('secondary-detail-box');
+            box.innerHTML = `
+                <div class="md:col-span-4 bg-slate-900 rounded-xl p-5 text-white flex flex-col justify-between min-h-[170px] border border-slate-800">
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-mono text-lime-400 font-bold">${d.ion}</span>
+                            <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-white/10">Secundario</span>
+                        </div>
+                        <h4 class="text-2xl font-extrabold font-mono">${d.name} (${d.symbol})</h4>
+                    </div>
+                    <div class="text-[11px] font-mono text-slate-300 border-t border-slate-800 pt-2">
+                        <span class="text-slate-400 block text-[10px]">Compartimiento Principal:</span>
+                        ${d.compartment}
+                    </div>
+                </div>
+                <div class="md:col-span-8 space-y-2 text-xs leading-relaxed text-slate-600">
+                    <h4 class="text-sm font-bold text-slate-800 text-accent">${d.title}</h4>
+                    <p>${d.description}</p>
+                    <div class="bg-accent-light/60 p-3 rounded-lg border border-accent/20 space-y-1 text-[11px] text-slate-700">
+                        ${d.physioPoints.map(p => `<div>• ${p}</div>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        const secondaryMatchingData = [
+            { id: 'ca', prompt: 'Mineralización esquelética, contracción de actina/miosina y coagulación:', correct: 'Ca' },
+            { id: 'na', prompt: 'Catión extracelular primario que regula el equilibrio hídrico y osmótico:', correct: 'Na' },
+            { id: 'k',  prompt: 'Catión intracelular principal clave en la repolarización nerviosa:', correct: 'K' },
+            { id: 'mg', prompt: 'Cofactor de >300 enzimas y estabilizador del complejo de ATP:', correct: 'Mg' },
+            { id: 'cl', prompt: 'Anión extracelular acompañante del sodio y componente del jugo gástrico (HCl):', correct: 'Cl' },
+            { id: 'p',  prompt: 'Moneda energética (ATP), bicapa de fosfolípidos y sostén óseo:', correct: 'P' },
+            { id: 's',  prompt: 'Aminoácidos cisteína/metionina y formación de puentes disulfuro (-S-S-):', correct: 'S' }
+        ];
+
+        function renderSecondaryMatching() {
+            const grid = document.getElementById('secondary-matching-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            secondaryMatchingData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2";
+                card.innerHTML = `
+                    <p class="font-semibold text-slate-700 leading-snug">${item.prompt}</p>
+                    <select id="match-sec-${item.id}" class="w-full p-2 rounded-lg border border-slate-300 bg-white text-xs font-mono font-bold focus-accent">
+                        <option value="">-- Asignar Bioelemento --</option>
+                        <option value="Ca">Calcio (Ca²⁺)</option>
+                        <option value="Na">Sodio (Na⁺)</option>
+                        <option value="K">Potasio (K⁺)</option>
+                        <option value="Mg">Magnesio (Mg²⁺)</option>
+                        <option value="Cl">Cloro (Cl⁻)</option>
+                        <option value="P">Fósforo (PO₄³⁻)</option>
+                        <option value="S">Azufre (S)</option>
+                    </select>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function validateSecondaryMatching() {
+            let correct = 0;
+            let total = secondaryMatchingData.length;
+            const fb = document.getElementById('secondary-matching-feedback');
+            fb.classList.remove('hidden');
+
+            secondaryMatchingData.forEach(item => {
+                const sel = document.getElementById('match-sec-' + item.id);
+                if (sel && sel.value === item.correct) {
+                    correct++;
+                    sel.className = "w-full p-2 rounded-lg border border-emerald-400 bg-emerald-50 text-xs font-mono font-bold text-emerald-900";
+                } else if (sel) {
+                    sel.className = "w-full p-2 rounded-lg border border-rose-300 bg-rose-50 text-xs font-mono font-bold text-rose-900";
+                }
+            });
+
+            if (correct === total) {
+                fb.className = "p-3.5 rounded-xl text-xs bg-emerald-50 text-emerald-900 border border-emerald-200";
+                fb.innerHTML = "<strong>¡Correlación Perfecta (7/7)!</strong> Has identificado con total precisión el rol fisiológico de todos los bioelementos secundarios: excitabilidad iónica (Na⁺, K⁺), matrices y contracción (Ca²⁺, P), bioenergética enzimática (Mg²⁺), secreción digestiva (Cl⁻) y estabilidad estructural disulfuro (S).";
+            } else {
+                fb.className = "p-3.5 rounded-xl text-xs bg-amber-50 text-amber-900 border border-amber-200";
+                fb.innerHTML = "<strong>Verificación:</strong> Has acertado <strong>" + correct + " de " + total + "</strong> funciones. Revisa los casilleros marcados en rojo (en especial la diferenciación entre Na⁺ extracelular y K⁺ intracelular).";
+            }
+        }
+
+        function resetSecondaryMatching() {
+            renderSecondaryMatching();
+            const fb = document.getElementById('secondary-matching-feedback');
+            if (fb) fb.classList.add('hidden');
+        }
+
+        // ==========================================
+        // MÓDULO 4: OLIGOELEMENTOS (TRAZAS)
+        // ==========================================
+        const traceDatabase = [
+            {
+                id: 'Fe',
+                symbol: 'Fe',
+                name: 'Hierro',
+                role: 'Transporte de Oxígeno (Hemoglobina) y Citocromos',
+                patientCase: 'Paciente femenina de 24 años consulta por astenia severa, disnea ante mínimos esfuerzos, palidez mucocutánea y taquicardia refleja.',
+                labFinding: 'Hemoglobina: 8.4 g/dL (Baja) | Ferritina sérica: 6 ng/mL (Agotamiento) | Frotis: Microcitosis e hipocromía marcada.',
+                pathologyName: 'Anemia Ferropénica y Falla en el Transporte de O₂',
+                explanation: 'El Hierro (Fe) es el átomo central de coordinación del grupo hemo en la hemoglobina y mioglobina, permitiendo el transporte de oxígeno a los músculos esqueléticos y tejidos. Su depleción reduce drásticamente el transporte gaseoso y la síntesis de ATP mitocondrial.'
+            },
+            {
+                id: 'I',
+                symbol: 'I',
+                name: 'Yodo',
+                role: 'Biosíntesis de Hormonas Tiroideas (T3 y T4)',
+                patientCase: 'Paciente de 42 años acude por aumento del volumen tiroideo cervical anterior, somnolencia, intolerancia intensa al frío, aumento de peso y bradicardia.',
+                labFinding: 'TSH: 18.5 mUI/L (Muy elevada) | T4 Libre: 0.3 ng/dL (Disminuida) | Ecografía: Bocio difuso.',
+                pathologyName: 'Bocio Endémico e Hipotiroidismo Primario',
+                explanation: 'El Yodo (I) es un oligoelemento constituyente de las hormonas triyodotironina (T3) y tiroxina (T4), reguladoras maestras del metabolismo basal y la termogénesis corporal.'
+            },
+            {
+                id: 'Zn',
+                symbol: 'Zn',
+                name: 'Zinc',
+                role: 'Sistema Inmune, Cicatrización y Dedos de Zinc',
+                patientCase: 'Paciente en recuperación post-quirúrgica presenta retraso notable en la epitelización de heridas, dermatitis periungueal e infecciones bacterianas oportunistas recurrentes.',
+                labFinding: 'Actividad sérica de fosfatasa alcalina disminuida | Linfopenia T funcional | Concentración plasmática de Zinc: 38 µg/dL (Normal: 70-120 µg/dL).',
+                pathologyName: 'Déficit Inmunológico y Fallo de Cicatrización Tisular',
+                explanation: 'El Zinc (Zn) es cofactor crítico en metalloenzimas (ADN/ARN polimerasas), modula la maduración tímica de linfocitos T y conforma dominios de dedos de zinc indispensables para la síntesis de proteínas durante la reparación tisular.'
+            },
+            {
+                id: 'CuCo',
+                symbol: 'Cu / Co',
+                name: 'Cobre y Cobalto',
+                role: 'Eritropoyesis y Estructura de la Vitamina B12',
+                patientCase: 'Paciente vegetariano estricto de 58 años acude por anemia megaloblástica, marcha atáxica y parestesias en extremidades inferiores (síndrome cordonal posterior).',
+                labFinding: 'VCM: 114 fL (Macrocitosis franca) | Niveles de Cobalamina sérica: 95 pg/mL (Críticamente bajos) | Deficiencia en movilización férrica por ceruloplasmina.',
+                pathologyName: 'Anemia Perniciosa y Neuropatía por Carencia de Cobalto/Vitamina B12',
+                explanation: 'El Cobalto (Co) forma el centro activo organometálico de la cobalamina (Vitamina B12), indispensable para la síntesis de ADN y mielina, mientras que el Cobre (Cu) oxida el hierro para su transporte plasmático.'
+            },
+            {
+                id: 'F',
+                symbol: 'F',
+                name: 'Flúor',
+                role: 'Resistencia del Esmalte Dental (Fluorapatita)',
+                patientCase: 'Paciente escolar de 10 años en control de salud escolar evidencia desmineralización rápida de piezas dentarias y múltiples caries profundas.',
+                labFinding: 'Agua de red domiciliaria con concentración de fluoruro menor a 0.1 ppm | Disolución rápida de hidroxiapatita por ácidos bacterianos.',
+                pathologyName: 'Desmineralización y Vulnerabilidad a Caries Dentales',
+                explanation: 'El Flúor (F) sustituye aniones hidroxilo en el cristal óseo y dental formando fluorapatita [Ca₁₀(PO₄)₆F₂], estructura mucho más resistente al ataque de ácidos generados por bacterias orales.'
+            },
+            {
+                id: 'Se',
+                symbol: 'Se',
+                name: 'Selenio',
+                role: 'Defensa Antioxidante Celular (Glutatión Peroxidasa)',
+                patientCase: 'Paciente con nutrición parenteral prolongada sin suplementación traza refiere mialgias generalizadas, debilidad en cuádriceps y miocardiopatía.',
+                labFinding: 'Niveles elevados de hidroperóxidos lipídicos plasmáticos | Actividad de Glutatión Peroxidasa (GPx) en eritrocitos reducida al 20%.',
+                pathologyName: 'Estrés Oxidativo Severo y Daño Membranal',
+                explanation: 'El Selenio (Se) se incorpora como selenocisteína en la enzima glutatión peroxidasa (GPx), sistema antioxidante que descompone peróxidos tóxicos protegiendo las membranas celulares del daño por radicales libres.'
+            }
+        ];
+
+        function renderTraceAtlas() {
+            const btnContainer = document.getElementById('trace-atlas-buttons');
+            if (!btnContainer) return;
+            btnContainer.innerHTML = '';
+
+            traceDatabase.forEach((item, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'p-2.5 rounded-xl border border-amber-200 hover:border-accent bg-amber-50/40 hover:bg-amber-100/60 text-center transition';
+                btn.innerHTML = `
+                    <div class="font-mono font-extrabold text-amber-900 text-sm">${item.symbol}</div>
+                    <div class="text-[11px] font-semibold text-slate-700 mt-0.5">${item.name}</div>
+                `;
+                btn.onclick = () => showTraceAtlasDetail(index);
+                btnContainer.appendChild(btn);
+            });
+
+            showTraceAtlasDetail(0);
+        }
+
+        function showTraceAtlasDetail(index) {
+            const item = traceDatabase[index];
+            const detail = document.getElementById('trace-atlas-detail');
+            if (!detail) return;
+            detail.innerHTML = `
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="font-mono font-bold text-amber-900 bg-amber-200 px-2.5 py-1 rounded text-xs">${item.symbol}</span>
+                        <h4 class="text-base font-bold text-slate-800">${item.name}</h4>
+                    </div>
+                    <span class="text-xs font-mono font-bold text-accent bg-accent-light px-2.5 py-1 rounded-md border border-accent/20">
+                        Concentración Traza &lt; 0.5%
+                    </span>
+                </div>
+                <div class="space-y-2 text-xs leading-relaxed text-slate-600 pt-1">
+                    <p class="font-bold text-slate-800 text-xs sm:text-sm text-accent">${item.role}</p>
+                    <p>${item.explanation}</p>
+                    <div class="p-3 rounded-xl bg-amber-50/70 border border-amber-200 text-amber-950 font-medium">
+                        <strong>Relevancia en Patología:</strong> ${item.pathologyName}.
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // MÓDULO 5: CASOS CLÍNICOS
+        // ==========================================
+        function renderClinicalSimulator() {
+            const tabsContainer = document.getElementById('clinical-case-tabs');
+            if (!tabsContainer) return;
+            tabsContainer.innerHTML = '';
+
+            traceDatabase.forEach((c, idx) => {
+                const isCurrent = state.clinicalCurrentCase === idx;
+                const btn = document.createElement('button');
+                btn.className = `px-3 py-1.5 rounded-lg text-xs font-bold border transition ${
+                    isCurrent
+                        ? 'bg-accent text-white border-accent shadow-xs'
+                        : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                }`;
+                btn.innerHTML = `Caso #${idx + 1}`;
+                btn.onclick = () => {
+                    state.clinicalCurrentCase = idx;
+                    const fb = document.getElementById('clinical-feedback-box');
+                    if (fb) fb.classList.add('hidden');
+                    renderClinicalSimulator();
+                };
+                tabsContainer.appendChild(btn);
+            });
+
+            const activeCase = traceDatabase[state.clinicalCurrentCase];
+            const display = document.getElementById('clinical-case-display');
+            if (display) {
+                display.innerHTML = `
+                    <div class="flex flex-wrap justify-between items-center border-b border-slate-800 pb-2.5 gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                            <span class="font-mono text-xs uppercase tracking-wider text-slate-300">HISTORIA CLÍNICA #0${state.clinicalCurrentCase + 1}</span>
+                        </div>
+                        <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-white/10 text-amber-300 border border-amber-300/30">
+                            DEFICIENCIA NUTRICIONAL / METABÓLICA
+                        </span>
+                    </div>
+                    <div class="space-y-1 text-xs">
+                        <div class="font-bold text-amber-400 uppercase text-[11px]">Presentación del Paciente:</div>
+                        <p class="text-slate-200 leading-relaxed">${activeCase.patientCase}</p>
+                    </div>
+                    <div class="bg-slate-800/90 p-3 rounded-lg border border-slate-700 font-mono text-xs text-lime-400">
+                        <div class="text-[10px] text-slate-400 uppercase mb-1">Hallazgos Analíticos de Laboratorio:</div>
+                        ${activeCase.labFinding}
+                    </div>
+                `;
+            }
+
+            const optionsContainer = document.getElementById('clinical-treatment-options');
+            if (optionsContainer) {
+                optionsContainer.innerHTML = '';
+                traceDatabase.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'p-2.5 rounded-xl border border-slate-200 hover:border-accent bg-white text-left transition flex items-center gap-2.5 group';
+                    btn.innerHTML = `
+                        <div class="w-8 h-8 rounded-lg bg-accent-light group-hover:bg-accent group-hover:text-white text-accent font-mono font-bold text-xs flex items-center justify-center transition">
+                            ${opt.symbol}
+                        </div>
+                        <div>
+                            <div class="font-bold text-xs text-slate-800">${opt.name}</div>
+                            <div class="text-[10px] text-slate-500">Suplementar oligoelemento</div>
+                        </div>
+                    `;
+                    btn.onclick = () => prescribeTraceElement(opt.id);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+        }
+
+        function prescribeTraceElement(selectedId) {
+            const activeCase = traceDatabase[state.clinicalCurrentCase];
+            const fb = document.getElementById('clinical-feedback-box');
+            if (!fb) return;
+            fb.classList.remove('hidden');
+
+            if (selectedId === activeCase.id) {
+                fb.className = 'p-3.5 rounded-xl text-xs bg-emerald-50 border border-emerald-300 text-emerald-900';
+                fb.innerHTML = `<strong>¡Diagnóstico y Prescripción Correcta! (${activeCase.pathologyName})</strong><br>${activeCase.explanation}`;
+            } else {
+                const chosenObj = traceDatabase.find(t => t.id === selectedId);
+                fb.className = 'p-3.5 rounded-xl text-xs bg-rose-50 border border-rose-300 text-rose-900';
+                fb.innerHTML = `<strong>Tratamiento Ineficaz:</strong> El elemento <strong>${chosenObj.name} (${chosenObj.symbol})</strong> interviene en: <em>${chosenObj.role}</em>. No corresponde con la fisiopatología presentada en este paciente.`;
+            }
+        }
+
+        // ==========================================
+        // MODALES
+        // ==========================================
+        function openTutorial() {
+            document.getElementById('modal-tutorial').classList.remove('hidden');
+        }
+
+        function closeTutorial() {
+            document.getElementById('modal-tutorial').classList.add('hidden');
+        }
+
+        function openFormulasModal() {
+            document.getElementById('modal-formulas').classList.remove('hidden');
+        }
+
+        function closeFormulasModal() {
+            document.getElementById('modal-formulas').classList.add('hidden');
+        }
+
+        // ==========================================
+        // INICIALIZACIÓN
+        // ==========================================
+        window.onload = function() {
+            renderMod1Classifier();
+            inspectChon('O');
+            inspectSecondary('Ca');
+            renderSecondaryMatching();
+            renderTraceAtlas();
+            renderClinicalSimulator();
+        };
+    </script>
+</body>
+</html>
